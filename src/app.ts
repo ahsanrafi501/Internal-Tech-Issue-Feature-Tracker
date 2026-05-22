@@ -2,6 +2,7 @@ import express, { type Application, type Request, type Response } from "express"
 import cors from "cors"
 import { ApiResponse } from "./utility/sendResponse"
 import { userRoute } from "./module/user/user.route"
+import { issueRoute } from "./module/issue/issue.route"
 
 
 
@@ -17,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 
-app.use("/api", userRoute)
+app.use("/api", userRoute);
+app.use("/api", issueRoute);
 
 export default app;

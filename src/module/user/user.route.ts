@@ -3,9 +3,8 @@ import { userController } from "./user.controller";
 
 const router = Router();
 
-router.post('/auth/signup', userController.signupUser)
-
-
+router.post('/auth/signup', userController.signupUser);
+router.post('/auth/login', userController.userLogin);
 
 
 
