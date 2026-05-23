@@ -1,8 +1,7 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { issueService } from "./issue.service";
 import { ApiResponse } from "../../utility/sendResponse";
 import { ApiError } from "../../utility/sendError";
-
 const createIssue = async (req: Request, res: Response) => {
 
     try {
@@ -47,10 +46,45 @@ const getSingleIssue = async (req: Request, res: Response) => {
 
 }
 
+interface AuthenticatedRequest extends Request {
+    user?: any;
+}
+
+const updateIssues = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params;
+        const query = req.body;
+        const user = req.user;
+        const updateDoc = { ...query, user, id: Number(id) };
+        
+        const result = await issueService.updateIssuesFromDB(updateDoc);
+        
+        return res.status(200).json(
+            new ApiResponse(200, "issues updated successfully", result)
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+const deleteIssure = async(req: Request, res: Response) =>{
+    try {
+        const {id} = req.params;
+        const result = await issueService.deleteUserFromDB(Number(id))
+        res.status(200).json(new ApiResponse(200, "Issue deleted successfully", result))
+    } catch (error: any) {
+        throw new ApiError(error.statusCode, error.message)
+    }
+}
+
 
 
 export const issueController = {
     createIssue,
     getAllIssues,
-    getSingleIssue
+    getSingleIssue,
+    updateIssues,
+    deleteIssure,
 }
