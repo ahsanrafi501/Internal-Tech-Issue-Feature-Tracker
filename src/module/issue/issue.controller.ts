@@ -6,8 +6,8 @@ import { ApiError } from "../../utility/sendError";
 const createIssue = async (req: Request, res: Response) => {
 
     try {
-        const result = await issueService.createIssueIntoDB(req.body);
-        new ApiResponse(200, "Issues submitted successfully", result.rows[0]);
+        const result = await issueService.createIssueIntoDB(req.body, req.user);
+        res.status(200).json(new ApiResponse(200, "Issues submitted successfully", result.rows[0]))
 
     } catch (error: any) {
         throw new ApiError(404, error.message)

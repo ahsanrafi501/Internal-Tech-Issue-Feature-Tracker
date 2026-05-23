@@ -31,7 +31,7 @@ export const initDB = async () => {
                 description TEXT,
                 type VARCHAR(20),
                 status VARCHAR(20),
-                reporter_id INT UNIQUE REFERENCES USERS(id) ON DELETE CASCADE,
+                reporter_id INT REFERENCES USERS(id) ON DELETE CASCADE,
                 created_at TIMESTAMP DEFAULT NOW(),
                 updated_at TIMESTAMP DEFAULT NOW()
             )
