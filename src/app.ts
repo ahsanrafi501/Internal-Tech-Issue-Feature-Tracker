@@ -3,6 +3,7 @@ import cors from "cors"
 import { ApiResponse } from "./utility/sendResponse"
 import { userRoute } from "./module/user/user.route"
 import { issueRoute } from "./module/issue/issue.route"
+import golobalErrorHandler from "./middleware/globalErrorHandler"
 
 
 
@@ -20,5 +21,10 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use("/api", userRoute);
 app.use("/api", issueRoute);
+
+
+
+
+app.use(golobalErrorHandler);
 
 export default app;
